@@ -41,6 +41,13 @@ $products = [
         'img_url' => 'img/lot-6.jpg',
     ],
 ];
+
+function format_price (float $price): string
+{
+    $ceiled_price = ceil($price);
+    return $ceiled_price < 1000 ? ceil($ceiled_price) . ' ₽' : number_format($ceiled_price, 0, ',', ' ') . ' ₽';
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -120,7 +127,7 @@ $products = [
                             <div class="lot__state">
                                 <div class="lot__rate">
                                     <span class="lot__amount">Стартовая цена</span>
-                                    <span class="lot__cost"><?php print($product['price']); ?><b class="rub">р</b></span>
+                                    <span class="lot__cost"><?php print(format_price($product['price'])); ?></span>
                                 </div>
                                 <div class="lot__timer timer">
                                     12:23
