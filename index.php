@@ -44,8 +44,7 @@ $products = [
 
 function format_price (float $price): string
 {
-    $ceiled_price = ceil($price);
-    return $ceiled_price < 1000 ? ceil($ceiled_price) . ' ₽' : number_format($ceiled_price, 0, ',', ' ') . ' ₽';
+    return ceil($price) < 1000 ? ceil($price) . ' ₽' : number_format(ceil($price), 0, ',', ' ') . ' ₽';
 }
 
 ?>
