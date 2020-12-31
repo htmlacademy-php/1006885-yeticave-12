@@ -56,7 +56,7 @@
                 <!--заполните этот список из массива категорий-->
                 <?php foreach ($product_categories as $value) : ?>
                     <li class="nav__item">
-                        <a href="pages/all-lots.html"><?php print($value); ?></a>
+                        <a href="pages/all-lots.html"><?php filter_xss(print($value)); ?></a>
                     </li>
                 <?php endforeach; ?>
             </ul>

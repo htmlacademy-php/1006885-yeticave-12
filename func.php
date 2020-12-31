@@ -20,3 +20,7 @@ function format_price(float $price): string
 {
     return ceil($price) < 1000 ? ceil($price) . ' ₽' : number_format(ceil($price), 0, ',', ' ') . ' ₽';
 }
+
+function filter_xss($str) {
+    return htmlspecialchars($str);
+};
