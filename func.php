@@ -36,7 +36,7 @@ function get_time_interval($dt_exp) {
         return false;
     }
 
-    $hh = $dd < 1 ? date_interval_format($dt_diff, '%h') : ($dd * 24 + (int)date_interval_format($dt_diff, '%h'));
+    $hh = $dd * 24 + (int)date_interval_format($dt_diff, '%h');
     $hh = str_pad($hh, 2, '0', STR_PAD_LEFT);
     $mm = date_interval_format($dt_diff, '%i');
     $mm = str_pad($mm, 2, '0', STR_PAD_LEFT);
