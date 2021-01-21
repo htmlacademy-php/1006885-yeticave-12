@@ -18,7 +18,6 @@
         <ul class="lots__list">
             <!--заполните этот список из массива с товарами-->
             <?php foreach($products as $product) : ?>
-            <?php if (!get_time_interval($product['expired'])) continue; ?>
             <li class="lots__item lot">
                 <div class="lot__image">
                     <img src="<?= filter_xss($product['img_url']) ?>" width="350" height="260" alt="">
@@ -32,9 +31,9 @@
                             <span class="lot__cost"><?php filter_xss(print(format_price($product['price']))); ?></span>
                         </div>
                         <div class="lot__timer timer <?php if (get_time_interval($product['expired'])['hh'] < 1) : ?>timer--finishing<?php endif; ?>">
-                            <?php print(get_time_interval($product['expired'])['hh']); ?>
+                            <?php printf('%02d', get_time_interval($product['expired'])['hh']); ?>
                             :
-                            <?php print(get_time_interval($product['expired'])['mm']); ?>
+                            <?php printf('%02d', get_time_interval($product['expired'])['mm']); ?>
                         </div>
                     </div>
                 </div>
