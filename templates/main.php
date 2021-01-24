@@ -30,8 +30,10 @@
                             <span class="lot__amount">Стартовая цена</span>
                             <span class="lot__cost"><?php filter_xss(print(format_price($product['price']))); ?></span>
                         </div>
-                        <div class="lot__timer timer">
-                            12:23
+                        <div class="lot__timer timer <?php if (get_time_interval($product['expired'])['hh'] < 1) : ?>timer--finishing<?php endif; ?>">
+                            <?php printf('%02d', get_time_interval($product['expired'])['hh']); ?>
+                            :
+                            <?php printf('%02d', get_time_interval($product['expired'])['mm']); ?>
                         </div>
                     </div>
                 </div>
