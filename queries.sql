@@ -1,46 +1,70 @@
-INSERT INTO category SET category_name = 'Доски и лыжи', code = 'boards';
-INSERT INTO category SET category_name = 'Крепления', code = 'attachment';
-INSERT INTO category SET category_name = 'Ботинки', code = 'boots';
-INSERT INTO category SET category_name = 'Одежда', code = 'clothing';
-INSERT INTO category SET category_name = 'Инструменты', code = 'tools';
-INSERT INTO category SET category_name = 'Разное', code = 'other';
+INSERT INTO category (category_name, code)
+VALUES  ('Доски и лыжи', 'boards'),
+        ('Крепления', 'attachment'),
+        ('Ботинки', 'boots'),
+        ('Одежда', 'clothing'),
+        ('Инструменты', 'tools'),
+        ('Разное', 'other');
 
-INSERT INTO user SET username = 'Vasiliy', email = 'vas@mail.ru', pwd = 'secret', contacts = 'Moscow';
-INSERT INTO user SET username = 'Petr', email = 'petr@mail.ru', pwd = 'supersecret', contacts = 'Novgorod';
+INSERT INTO user (username, email, pwd, contacts)
+VALUES ('Vasiliy', 'vas@mail.ru', 'secret', 'Moscow');
 
-INSERT INTO lot SET lot_name = '2014 Rossignol District Snowboard', lot_price = 10999, img_url = 'img/lot-1.jpg', date_exp = '2021-03-14', rate_step = 20, author_id = 1, category_id = 1;
-INSERT INTO lot SET lot_name = 'DC Ply Mens 2016/2017 Snowboard', lot_price = 159999, img_url = 'img/lot-2.jpg', date_exp = '2021-03-17', rate_step = 1000, author_id = 1, category_id = 1;
-INSERT INTO lot SET lot_name = 'Крепления Union Contact Pro 2015 года размер L/XL', lot_price = 8000, img_url = 'img/lot-3.jpg', date_exp = '2021-04-25', rate_step = 20, author_id = 2, category_id = 2;
-INSERT INTO lot SET lot_name = 'Ботинки для сноуборда DC Mutiny Charocal', lot_price = 10999, img_url = 'img/lot-4.jpg', date_exp = '2021-04-03', rate_step = 50, author_id = 1, category_id = 3;
-INSERT INTO lot SET lot_name = 'Куртка для сноуборда DC Mutiny Charocal', lot_price = 7500, img_url = 'img/lot-5.jpg', date_exp = '2021-03-18', rate_step = 20, author_id = 2, category_id = 4;
-INSERT INTO lot SET lot_name = 'Маска Oakley Canopy', lot_price = 5400, img_url = 'img/lot-6.jpg', date_exp = '2021-05-10', rate_step = 10, author_id = 2, category_id = 6;
+INSERT INTO user (username, email, pwd, contacts)
+VALUES ('Petr', 'petr@mail.ru', 'supersecret', 'Novgorod');
 
-INSERT INTO rate SET user_id = 2, lot_id = 1, rate_price = 11019;
-INSERT INTO rate SET user_id = 1, lot_id = 1, rate_price = 11039;
-INSERT INTO rate SET user_id = 2, lot_id = 1, rate_price = 11059;
-INSERT INTO rate SET user_id = 1, lot_id = 5, rate_price = 7520;
+INSERT INTO lot (lot_name, lot_price, img_url, date_exp, rate_step, author_id, category_id)
+VALUES ('2014 Rossignol District Snowboard', 10999, 'img/lot-1.jpg', '2021-03-14', 20, 1, 1);
+
+INSERT INTO lot (lot_name, lot_price, img_url, date_exp, rate_step, author_id, category_id)
+VALUES ('DC Ply Mens 2016/2017 Snowboard', 159999, 'img/lot-2.jpg', '2021-03-17', 1000, 1, 1);
+
+INSERT INTO lot (lot_name, lot_price, img_url, date_exp, rate_step, author_id, category_id)
+VALUES ('Крепления Union Contact Pro 2015 года размер L/XL', 8000, 'img/lot-3.jpg', '2021-04-25', 20, 2, 2);
+
+INSERT INTO lot (lot_name, lot_price, img_url, date_exp, rate_step, author_id, category_id)
+VALUES ('Ботинки для сноуборда DC Mutiny Charocal', 10999, 'img/lot-4.jpg', '2021-04-03', 50, 1, 3);
+
+INSERT INTO lot (lot_name, lot_price, img_url, date_exp, rate_step, author_id, category_id)
+VALUES ('Куртка для сноуборда DC Mutiny Charocal', 7500, 'img/lot-5.jpg', '2021-03-18', 20, 2, 4);
+
+INSERT INTO lot (lot_name, lot_price, img_url, date_exp, rate_step, author_id, category_id)
+VALUES ('Маска Oakley Canopy', 5400, 'img/lot-6.jpg', '2021-05-10', 10, 2, 6);
+
+INSERT INTO rate (user_id, lot_id, rate_price)
+VALUES (2, 1, 11019);
+
+INSERT INTO rate (user_id, lot_id, rate_price)
+VALUES (1, 1, 11039);
+
+INSERT INTO rate (user_id, lot_id, rate_price)
+VALUES (2, 1, 11059);
+
+INSERT INTO rate (user_id, lot_id, rate_price)
+VALUES (1, 5, 7520);
 
 
 SELECT * FROM category;
 
-SELECT l.id, lot_name, lot_price, img_url, rate_price, category_name FROM lot l
+SELECT l.id, l.lot_name, l.lot_price, l.img_url, r.rate_price, c.category_name FROM lot l
 JOIN category c
-ON category_id = c.id
+ON l.category_id = c.id
 JOIN rate r
 ON r.lot_id = l.id
-WHERE date_exp >= '2021-02-16';
+WHERE l.date_exp >= '2021-02-16';
 
-SELECT lot.id, lot_name, category_name
-FROM lot
+SELECT l.id, l.lot_name, c.category_name
+FROM lot l
 JOIN category c
-ON lot.id = c.id
-WHERE lot.id = 3;
+ON l.id = c.id
+WHERE l.id = 3;
 
-UPDATE lot SET lot_name = 'Маска Oakley Canopy NEW' WHERE id = 6;
+UPDATE lot
+SET lot_name = 'Маска Oakley Canopy NEW'
+WHERE id = 6;
 
-SELECT rate_price, r.date_add, lot_name
+SELECT r.rate_price, r.date_add, l.lot_name
 FROM rate r
-JOIN lot
-ON r.lot_id = lot.id
-WHERE lot_id = 1
+JOIN lot l
+ON r.lot_id = l.id
+WHERE r.lot_id = 1
 ORDER BY r.date_add;
