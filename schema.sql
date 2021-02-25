@@ -6,17 +6,15 @@ USE yeticave;
 
 CREATE TABLE category (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  category_name VARCHAR(128) NOT NULL UNIQUE,
-  code VARCHAR(64) NOT NULL UNIQUE
+  category_name VARCHAR(255) NOT NULL UNIQUE,
+  code VARCHAR(128) NOT NULL UNIQUE
 );
 
 CREATE TABLE user (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  lot_id INT,
-  rate_id INT,
-  email VARCHAR(128) NOT NULL UNIQUE,
-  pwd CHAR(64) NOT NULL,
-  username VARCHAR(128) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  pwd CHAR(128) NOT NULL,
+  username VARCHAR(255) NOT NULL,
   contacts TEXT,
   date_reg TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -30,7 +28,7 @@ CREATE TABLE lot (
   lot_desc VARCHAR(255),
   img_url VARCHAR(255),
   lot_price DECIMAL(10,2) NOT NULL,
-  rate_step TINYINT NOT NULL,
+  rate_step SMALLINT NOT NULL,
   date_add TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   date_exp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (author_id) REFERENCES user(id),
@@ -47,9 +45,6 @@ CREATE TABLE rate (
   FOREIGN KEY (user_id) REFERENCES user(id),
   FOREIGN KEY (lot_id) REFERENCES lot(id)
 );
-
-ALTER TABLE user ADD FOREIGN KEY (lot_id) REFERENCES lot(id);
-ALTER TABLE user ADD FOREIGN KEY (rate_id) REFERENCES rate(id);
 
 CREATE INDEX user_email ON user(email);
 CREATE INDEX lot_name ON lot(lot_name);
