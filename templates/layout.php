@@ -53,10 +53,9 @@
     <footer class="main-footer">
         <nav class="nav">
             <ul class="nav__list container">
-                <!--заполните этот список из массива категорий-->
-                <?php foreach ($product_categories as $value) : ?>
+                <?php foreach ($lots_categories as $category) : ?>
                     <li class="nav__item">
-                        <a href="pages/all-lots.html"><?php filter_xss(print($value)); ?></a>
+                        <a href="pages/all-lots.html"><?php filter_xss(print($category['category_name'])); ?></a>
                     </li>
                 <?php endforeach; ?>
             </ul>
