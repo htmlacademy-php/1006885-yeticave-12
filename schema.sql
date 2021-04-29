@@ -25,7 +25,7 @@ CREATE TABLE lot (
   winner_id INT,
   category_id INT,
   lot_name VARCHAR(255) NOT NULL,
-  lot_desc VARCHAR(255),
+  lot_desc TEXT,
   img_url VARCHAR(255),
   lot_price DECIMAL(10,2) NOT NULL,
   rate_step SMALLINT NOT NULL,
