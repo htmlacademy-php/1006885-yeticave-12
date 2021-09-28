@@ -13,12 +13,12 @@
  *
  * @return bool true при совпадении с форматом 'ГГГГ-ММ-ДД', иначе false
  */
-function is_date_valid(string $date) : bool {
-    $format_to_check = 'Y-m-d';
-    $dateTimeObj = date_create_from_format($format_to_check, $date);
-
-    return $dateTimeObj !== false && array_sum(date_get_last_errors()) === 0;
-}
+//function is_date_valid(string $date) : bool {
+//    $format_to_check = 'Y-m-d';
+//    $dateTimeObj = date_create_from_format($format_to_check, $date);
+//
+//    return $dateTimeObj !== false && array_sum(date_get_last_errors()) === 0;
+//}
 
 /**
  * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
@@ -29,50 +29,50 @@ function is_date_valid(string $date) : bool {
  *
  * @return mysqli_stmt Подготовленное выражение
  */
-function db_get_prepare_stmt($link, $sql, $data = []) {
-    $stmt = mysqli_prepare($link, $sql);
-
-    if ($stmt === false) {
-        $errorMsg = 'Не удалось инициализировать подготовленное выражение: ' . mysqli_error($link);
-        die($errorMsg);
-    }
-
-    if ($data) {
-        $types = '';
-        $stmt_data = [];
-
-        foreach ($data as $value) {
-            $type = 's';
-
-            if (is_int($value)) {
-                $type = 'i';
-            }
-            else if (is_string($value)) {
-                $type = 's';
-            }
-            else if (is_double($value)) {
-                $type = 'd';
-            }
-
-            if ($type) {
-                $types .= $type;
-                $stmt_data[] = $value;
-            }
-        }
-
-        $values = array_merge([$stmt, $types], $stmt_data);
-
-        $func = 'mysqli_stmt_bind_param';
-        $func(...$values);
-
-        if (mysqli_errno($link) > 0) {
-            $errorMsg = 'Не удалось связать подготовленное выражение с параметрами: ' . mysqli_error($link);
-            die($errorMsg);
-        }
-    }
-
-    return $stmt;
-}
+//function db_get_prepare_stmt($link, $sql, $data = []) {
+//    $stmt = mysqli_prepare($link, $sql);
+//
+//    if ($stmt === false) {
+//        $errorMsg = 'Не удалось инициализировать подготовленное выражение: ' . mysqli_error($link);
+//        die($errorMsg);
+//    }
+//
+//    if ($data) {
+//        $types = '';
+//        $stmt_data = [];
+//
+//        foreach ($data as $value) {
+//            $type = 's';
+//
+//            if (is_int($value)) {
+//                $type = 'i';
+//            }
+//            else if (is_string($value)) {
+//                $type = 's';
+//            }
+//            else if (is_double($value)) {
+//                $type = 'd';
+//            }
+//
+//            if ($type) {
+//                $types .= $type;
+//                $stmt_data[] = $value;
+//            }
+//        }
+//
+//        $values = array_merge([$stmt, $types], $stmt_data);
+//
+//        $func = 'mysqli_stmt_bind_param';
+//        $func(...$values);
+//
+//        if (mysqli_errno($link) > 0) {
+//            $errorMsg = 'Не удалось связать подготовленное выражение с параметрами: ' . mysqli_error($link);
+//            die($errorMsg);
+//        }
+//    }
+//
+//    return $stmt;
+//}
 
 /**
  * Возвращает корректную форму множественного числа
@@ -96,6 +96,7 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
  *
  * @return string Рассчитанная форма множественнго числа
  */
+
 function get_noun_plural_form (int $number, string $one, string $two, string $many): string
 {
     $number = (int) $number;
@@ -126,21 +127,21 @@ function get_noun_plural_form (int $number, string $one, string $two, string $ma
  * @param array $data Ассоциативный массив с данными для шаблона
  * @return string Итоговый HTML
  */
-function include_template($name, array $data = []) {
-    $name = 'templates/' . $name;
-    $result = '';
-
-    if (!is_readable($name)) {
-        return $result;
-    }
-
-    ob_start();
-    extract($data);
-    require $name;
-
-    $result = ob_get_clean();
-
-    return $result;
-}
+//function include_template($name, array $data = []) {
+//    $name = 'templates/' . $name;
+//    $result = '';
+//
+//    if (!is_readable($name)) {
+//        return $result;
+//    }
+//
+//    ob_start();
+//    extract($data);
+//    require $name;
+//
+//    $result = ob_get_clean();
+//
+//    return $result;
+//}
 
 
