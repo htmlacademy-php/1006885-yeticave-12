@@ -5,16 +5,9 @@ require_once('func.php');
 $is_auth = rand(0, 1);
 $user_name = 'Андрей Беляев';
 
-$link = mysqli_connect($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);
-mysqli_set_charset($link, 'utf8');
+$link = connect_db($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);
 
-if (!$link) {
-    $error = mysqli_connect_error();
-    $page_content = include_template('error.php', ['error' => $error]);
-    $layout_content = include_template('layout.php', [
-        'content' => $page_content
-    ]);
-} else {
+if ($link) {
     $sql_category = 'SELECT code, category_name FROM category';
     $result_category = mysqli_query($link, $sql_category);
     $lots_categories = mysqli_fetch_all($result_category, MYSQLI_ASSOC);
@@ -51,6 +44,6 @@ if (!$link) {
         'lots_categories' => $lots_categories,
         'content' => $lot_content
     ]);
-}
 
-print($layout_content);
+    print($layout_content);
+}

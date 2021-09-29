@@ -1,4 +1,22 @@
 <?php
+function connect_db($host, $user, $pwd, $name) {
+    $link = mysqli_connect($host, $user, $pwd, $name);
+    mysqli_set_charset($link, 'utf8');
+
+    if (!$link) {
+        $error = mysqli_connect_error();
+        $page_content = include_template('error.php', ['error' => $error]);
+        $layout_content = include_template('layout.php', [
+            'content' => $page_content,
+            'lots_categories' => []
+        ]);
+        print($layout_content);
+        return false;
+    } else {
+        return $link;
+    }
+}
+
 function include_template($name, array $data = []) {
     $name = 'templates/' . $name;
     $result = '';

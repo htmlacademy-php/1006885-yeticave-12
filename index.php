@@ -6,19 +6,11 @@ require_once('func.php');
 $is_auth = rand(0, 1);
 $user_name = 'Андрей Беляев';
 
-$link = mysqli_connect($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);
-mysqli_set_charset($link, 'utf8');
+$link = connect_db($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);
 
-$lots_categories = [];
-$today = date('Y-m-d');
+if ($link) {
+    $today = date('Y-m-d');
 
-if (!$link) {
-    $error = mysqli_connect_error();
-    $main_content = include_template('error.php', ['error' => $error]);
-    $layout_content = include_template('layout.php', [
-        'content' => $main_content
-    ]);
-} else {
     $sql_category = 'SELECT code, category_name FROM category';
     $result_category = mysqli_query($link, $sql_category);
 
@@ -47,6 +39,7 @@ if (!$link) {
         'lots_categories' => $lots_categories,
         'content' => $main_content,
     ]);
+
+    print($layout_content);
 }
 
-print($layout_content);
