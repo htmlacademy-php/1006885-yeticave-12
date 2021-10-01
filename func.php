@@ -147,6 +147,18 @@ function validate($data) : array {
                     $errors[$key] = 'Дата должна быть больше текущей даты';
                 }
                 break;
+            case 'email':
+                $errors[$key] = empty($value) ? 'Введите e-mail' : null;
+                break;
+            case 'password':
+                $errors[$key] = empty($value) ? 'Введите пароль' : null;
+                break;
+            case 'name':
+                $errors[$key] = empty($value) ? 'Введите имя' : null;
+                break;
+            case 'message_sign_up':
+                $errors[$key] = empty($value) ? 'Напишите как с вами связаться' : null;
+                break;
         }
     }
     return array_filter($errors);
