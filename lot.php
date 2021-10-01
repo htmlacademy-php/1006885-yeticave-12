@@ -2,16 +2,12 @@
 require_once('db.php');
 require_once('func.php');
 
-$link = mysqli_connect($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);
-mysqli_set_charset($link, 'utf8');
+$is_auth = rand(0, 1);
+$user_name = 'Андрей Беляев';
 
-if (!$link) {
-    $error = mysqli_connect_error();
-    $main_content = include_template('error.php', ['error' => $error]);
-    $layout_content = include_template('layout.php', [
-        'main_content' => $main_content
-    ]);
-} else {
+$link = connect_db($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);
+
+if ($link) {
     $sql_category = 'SELECT code, category_name FROM category';
     $result_category = mysqli_query($link, $sql_category);
     $lots_categories = mysqli_fetch_all($result_category, MYSQLI_ASSOC);
@@ -27,15 +23,27 @@ if (!$link) {
         $lot = mysqli_fetch_array($result_lot, MYSQLI_ASSOC);
 
         if ($lot) {
-            $layout_content = include_template('lot.php', [
+            $lot_content = include_template('lot.php', [
                 'lots_categories' => $lots_categories,
                 'lot' => $lot
             ]);
         } else {
             http_response_code(404);
-            $layout_content = include_template('404.php', []);
+            $lot_content = include_template('404.php', [
+                'lots_categories' => $lots_categories
+            ]);
         }
+    } else {
+        $lot_content = include_template('error.php', ['error' => 'Отсутствует идентификатор товара в запросе']);
     }
-}
 
-print($layout_content);
+    $layout_content = include_template('layout.php', [
+        'title' => $lot['lot_name'],
+        'is_auth' => $is_auth,
+        'user_name' => $user_name,
+        'lots_categories' => $lots_categories,
+        'content' => $lot_content
+    ]);
+
+    print($layout_content);
+}

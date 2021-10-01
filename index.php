@@ -6,27 +6,20 @@ require_once('func.php');
 $is_auth = rand(0, 1);
 $user_name = 'Андрей Беляев';
 
-$link = mysqli_connect($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);
-mysqli_set_charset($link, 'utf8');
+$link = connect_db($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);
 
-$lots_categories = [];
-$today = date('Y-m-d');
+if ($link) {
+    $today = date('Y-m-d');
 
-if (!$link) {
-    $error = mysqli_connect_error();
-    $main_content = include_template('error.php', ['error' => $error]);
-    $layout_content = include_template('layout.php', [
-        'main_content' => $main_content
-    ]);
-} else {
     $sql_category = 'SELECT code, category_name FROM category';
     $result_category = mysqli_query($link, $sql_category);
 
-    $sql_lot = 'SELECT l.id, l.lot_name, l.lot_price, l.img_url, l.date_exp, c.category_name
+    $sql_lot = 'SELECT l.id, l.lot_name, l.lot_price, l.img_url, l.date_add, l.date_exp, c.category_name
                 FROM lot l
                 JOIN category c
                 ON l.category_id = c.id
-                WHERE l.date_exp >= ?';
+                WHERE l.date_exp > ?
+                ORDER BY l.date_add DESC';
     $stmt = mysqli_prepare($link, $sql_lot);
     mysqli_stmt_bind_param($stmt, 's', $today);
     mysqli_stmt_execute($stmt);
@@ -44,8 +37,9 @@ if (!$link) {
         'is_auth' => $is_auth,
         'user_name' => $user_name,
         'lots_categories' => $lots_categories,
-        'main_content' => $main_content,
+        'content' => $main_content,
     ]);
+
+    print($layout_content);
 }
 
-print($layout_content);
