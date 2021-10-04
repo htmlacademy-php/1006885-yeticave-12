@@ -1,13 +1,6 @@
 <main>
-    <nav class="nav">
-        <ul class="nav__list container">
-            <?php foreach ($lots_categories as $category) : ?>
-                <li class="nav__item">
-                    <a href="pages/all-lots.html"><?= filter_user_data($category['category_name']); ?></a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </nav>
+    <?= $nav ?>
+
     <form class="form container <?= $errors ? "form--invalid" : ""; ?>" action="sign_up.php" method="post" autocomplete="off"> <!-- form
     --invalid -->
         <h2>Регистрация нового аккаунта</h2>
@@ -34,6 +27,6 @@
         <span class="form__error form__error--bottom"><?= $errors['form'] ?></span>
         <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
         <button type="submit" class="button">Зарегистрироваться</button>
-        <a class="text-link" href="#">Уже есть аккаунт</a>
+        <a class="text-link" href="login.php">Уже есть аккаунт</a>
     </form>
 </main>

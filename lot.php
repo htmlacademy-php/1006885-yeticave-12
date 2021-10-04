@@ -1,17 +1,8 @@
 <?php
-require_once('db.php');
+require_once('init.php');
 require_once('func.php');
 
-$is_auth = 0;
-//$user_name = 'Андрей Беляев';
-
-$link = connect_db($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);
-
 if ($link) {
-    $sql_category = 'SELECT code, category_name FROM category';
-    $result_category = mysqli_query($link, $sql_category);
-    $lots_categories = mysqli_fetch_all($result_category, MYSQLI_ASSOC);
-
     $lot_id = filter_input(INPUT_GET, 'lot_id');
 
     if ($lot_id) {
@@ -24,13 +15,13 @@ if ($link) {
 
         if ($lot) {
             $lot_content = include_template('lot.php', [
-                'lots_categories' => $lots_categories,
+                'nav' => $nav_content,
                 'lot' => $lot
             ]);
         } else {
             http_response_code(404);
             $lot_content = include_template('404.php', [
-                'lots_categories' => $lots_categories
+                'nav' => $nav_content
             ]);
         }
     } else {
@@ -39,8 +30,6 @@ if ($link) {
 
     $layout_content = include_template('layout.php', [
         'title' => $lot['lot_name'],
-        'is_auth' => $is_auth,
-//        'user_name' => $user_name,
         'lots_categories' => $lots_categories,
         'content' => $lot_content
     ]);

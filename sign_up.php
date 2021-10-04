@@ -1,16 +1,11 @@
 <?php
-require_once('db.php');
-require_once('func.php');
-
-$is_auth = 0;
-//$user_name = 'Андрей Беляев';
-
-$link = connect_db($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);
+require_once('init.php');
 
 if ($link) {
-    $sql_category = 'SELECT code, category_name FROM category';
-    $result_category = mysqli_query($link, $sql_category);
-    $lots_categories = mysqli_fetch_all($result_category, MYSQLI_ASSOC);
+    if (isset($_SESSION['user'])) {
+        http_response_code(403);
+        exit();
+    }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $form = $_POST;
@@ -18,7 +13,7 @@ if ($link) {
 
         if (count($errors)) {
             $page_content = include_template('sign_up.php', [
-                'lots_categories' => $lots_categories,
+                'nav' => $nav_content,
                 'errors' => $errors
             ]);
         } else {
@@ -32,7 +27,7 @@ if ($link) {
             if (mysqli_num_rows($res) > 0) {
                 $errors['form'] = 'Пользователь с этим email уже зарегистрирован';
                 $page_content = include_template('sign_up.php', [
-                    'lots_categories' => $lots_categories,
+                    'nav' => $nav_content,
                     'errors' => $errors
                 ]);
             }
@@ -45,20 +40,18 @@ if ($link) {
             }
 
             if ($res && empty($errors)) {
-                header('Location: /login.html');
+                header('Location: /login.php');
                 exit();
             }
         }
     } else {
         $page_content = include_template('sign_up.php', [
-            'lots_categories' => $lots_categories,
+            'nav' => $nav_content,
             ]);
     }
 
     $layout_content = include_template('layout.php', [
-        'title' => 'Добавление лота',
-        'is_auth' => $is_auth,
-//        'user_name' => $user_name,
+        'title' => 'Регистрация',
         'lots_categories' => $lots_categories,
         'content' => $page_content,
     ]);

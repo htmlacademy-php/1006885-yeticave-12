@@ -47,11 +47,11 @@ function filter_user_data($data) : string {
 };
 
 function get_time_interval($date) : array {
-    $time_interval = strtotime($date) - time();
+    $time_interval = strtotime($date) - time() - 1;
 
     return [
         'hh' => intdiv($time_interval, 3600),
-        'mm' => 59 - date('i')
+        'mm' => 60 - date('i')
     ];
 }
 
@@ -148,7 +148,11 @@ function validate($data) : array {
                 }
                 break;
             case 'email':
-                $errors[$key] = empty($value) ? 'Введите e-mail' : null;
+                if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                    $errors[$key] = 'Введите корректный email';
+                } else {
+                    $errors[$key] = empty($value) ? 'Введите e-mail' : null;
+                }
                 break;
             case 'password':
                 $errors[$key] = empty($value) ? 'Введите пароль' : null;

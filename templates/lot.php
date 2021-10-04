@@ -1,13 +1,6 @@
 <main>
-    <nav class="nav">
-      <ul class="nav__list container">
-        <?php foreach ($lots_categories as $category) : ?>
-          <li class="nav__item">
-              <a href="pages/all-lots.html"><?= filter_user_data($category['category_name']); ?></a>
-          </li>
-        <?php endforeach; ?>
-      </ul>
-    </nav>
+    <?= $nav ?>
+
     <section class="lot-item container">
         <h2><?= filter_user_data($lot['lot_name']) ?></h2>
         <div class="lot-item__content">
@@ -18,6 +11,7 @@
               <p class="lot-item__category">Категория: <span><?= filter_user_data($lot['category_name']) ?></span></p>
               <p class="lot-item__description"><?= filter_user_data($lot['lot_desc']) ?></p>
             </div>
+            <?php if (isset($_SESSION['user'])) : ?>
             <div class="lot-item__right">
                 <div class="lot-item__state">
                     <div class="lot-item__timer timer <?= get_time_interval($lot['date_exp'])['hh'] < 1 ? "timer--finishing" : "" ?>">
@@ -99,6 +93,7 @@
                     </table>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
     </section>
 </main>
