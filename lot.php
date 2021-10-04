@@ -2,8 +2,8 @@
 require_once('db.php');
 require_once('func.php');
 
-$is_auth = rand(0, 1);
-$user_name = 'Андрей Беляев';
+$is_auth = 0;
+//$user_name = 'Андрей Беляев';
 
 $link = connect_db($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);
 
@@ -40,7 +40,7 @@ if ($link) {
     $layout_content = include_template('layout.php', [
         'title' => $lot['lot_name'],
         'is_auth' => $is_auth,
-        'user_name' => $user_name,
+//        'user_name' => $user_name,
         'lots_categories' => $lots_categories,
         'content' => $lot_content
     ]);
