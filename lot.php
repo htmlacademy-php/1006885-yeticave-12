@@ -25,7 +25,10 @@ if ($link) {
             ]);
         }
     } else {
-        $lot_content = include_template('error.php', ['error' => 'Отсутствует идентификатор товара в запросе']);
+        $lot_content = include_template('error.php', [
+            'nav' => $nav_content,
+            'error' => 'Отсутствует идентификатор товара в запросе'
+        ]);
     }
 
     $layout_content = include_template('layout.php', [
