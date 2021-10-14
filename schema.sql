@@ -51,3 +51,5 @@ CREATE INDEX lot_name ON lot(lot_name);
 CREATE INDEX lot_price ON lot(lot_price);
 CREATE INDEX lot_dt_add ON lot(date_add);
 CREATE INDEX lot_dt_exp ON lot(date_exp);
+
+CREATE FULLTEXT INDEX lot_ft_search ON lot(lot_name, lot_desc);

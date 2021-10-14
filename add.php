@@ -34,7 +34,7 @@ if ($link) {
             if ($res) {
                 $lot_id = mysqli_insert_id($link);
 
-                header("Location: lot.php?lot_id=" . $lot_id);
+                header('Location: lot.php?lot_id=' . $lot_id);
             }
         }
     } else {
