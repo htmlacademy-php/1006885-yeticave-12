@@ -1089,7 +1089,7 @@ input:invalid .form__error{
 
 .history__item td {
   display: block;
-  width: 33%;
+  width: 30%;
   max-width: 110px;
   word-wrap: break-word;
 }

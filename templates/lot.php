@@ -25,14 +25,14 @@
                         <span class="lot-item__cost"><?= filter_user_data($lot['lot_price']) ?></span>
                       </div>
                       <div class="lot-item__min-cost">
-                        Мин. ставка <span><?= filter_user_data($lot['lot_price'] + $lot['rate_step']) ?></span>
+                        Мин. ставка <span><?= filter_user_data($lot['lot_price'] + $lot['bet_step']) ?></span>
                       </div>
                     </div>
                     <form class="lot-item__form" action="lot.php" method="post" autocomplete="off">
                       <p class="lot-item__form-item form__item <?= isset($errors['cost']) ? "form__item--invalid" : ""; ?>">
                         <label for="cost">Ваша ставка</label>
                         <input type="hidden" name="lot_id" value="<?= $lot['id'] ?>">
-                        <input type="hidden" name="lot_min_bet" value="<?= $lot['lot_price'] + $lot['rate_step'] ?>">
+                        <input type="hidden" name="lot_min_bet" value="<?= $lot['lot_price'] + $lot['bet_step'] ?>">
                         <input id="cost" type="text" name="cost" placeholder="12 000" value="<?= get_post_value('cost'); ?>">
                         <span class="form__error"><?= $errors['cost'] ?></span>
                       </p>
@@ -45,7 +45,7 @@
                         <?php foreach ($bets as $bet) : ?>
                         <tr class="history__item">
                             <td class="history__name"><?= $bet['username'] ?></td>
-                            <td class="history__price"><?= $bet['rate_price'] ?> р</td>
+                            <td class="history__price"><?= $bet['bet_price'] ?> р</td>
                             <td class="history__time"><?= calculate_time_interval($bet['date_add']) ?></td>
                         </tr>
                         <?php endforeach; ?>

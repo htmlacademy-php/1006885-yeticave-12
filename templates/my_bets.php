@@ -29,7 +29,7 @@
                     <?php endif; ?>
                 </td>
                 <td class="rates__price">
-                    <?= $bet['rate_price'] ?> р
+                    <?= $bet['bet_price'] ?> р
                 </td>
                 <td class="rates__time">
                     <?= calculate_time_interval($bet['date_add']) ?>

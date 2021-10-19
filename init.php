@@ -5,6 +5,7 @@ require_once('func.php');
 
 session_start();
 
+date_default_timezone_set('Europe/Moscow');
 $now = date('Y-m-d H:i:s');
 
 $link = connect_db($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);

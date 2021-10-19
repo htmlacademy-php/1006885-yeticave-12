@@ -27,7 +27,7 @@ if ($link) {
             array_push($lot_data, $file_url);
             $lot_data['lot-date'] = $lot_data['lot-date'] . ' ' . date('H:i:s');
             $sql_query = 'INSERT INTO lot
-                        (author_id, lot_name, category_id, lot_desc, lot_price, rate_step, date_exp, img_url)
+                        (owner_id, lot_name, category_id, lot_desc, lot_price, bet_step, date_exp, img_url)
                         VALUES (?, ?, (SELECT id FROM category WHERE category_name = ?), ?, ?, ?, ?, ?)';
             $stmt = db_get_prepare_stmt($link, $sql_query, $lot_data);
             $res = mysqli_stmt_execute($stmt);

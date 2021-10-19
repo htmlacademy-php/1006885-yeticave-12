@@ -18,8 +18,8 @@ if ($link) {
         if (!count($errors)) {
             $user_id = $_SESSION['user']['id'];
             mysqli_begin_transaction($link);
-            $sql = 'INSERT INTO rate
-                        (user_id, lot_id, rate_price)
+            $sql = 'INSERT INTO bet
+                        (user_id, lot_id, bet_price)
                         VALUES (?, ?, ?)';
             $data = [$user_id, $lot_id, $bet_data['cost']];
             $stmt = db_get_prepare_stmt($link, $sql, $data);
@@ -45,7 +45,7 @@ if ($link) {
     }
 
     if ($lot_id) {
-        $sql_query = 'SELECT l.id, l.lot_name, l.lot_price, l.rate_step, l.img_url, l.date_exp, l.lot_desc, c.category_name
+        $sql_query = 'SELECT l.id, l.lot_name, l.lot_price, l.bet_step, l.img_url, l.date_exp, l.lot_desc, c.category_name
                         FROM lot l
                         JOIN category c ON l.category_id = c.id
                         WHERE l.id=' . $lot_id;
@@ -54,12 +54,16 @@ if ($link) {
 
         $bets = [];
         if (isset($_SESSION['user'])) {
-            $sql_query = 'SELECT u.username, r.date_add, r.rate_price
-                            FROM rate r
+            $sql_query = 'SELECT u.username, r.date_add, r.bet_price
+                            FROM bet r
                             JOIN user u
                             ON u.id = r.user_id
-                            WHERE r.lot_id =' . $lot_id;
-            $res = mysqli_query($link, $sql_query);
+                            WHERE r.lot_id = ?
+                            ORDER BY r.date_add DESC';
+            $stmt = mysqli_prepare($link, $sql_query);
+            mysqli_stmt_bind_param($stmt, 'i', $lot_id);
+            mysqli_stmt_execute($stmt);
+            $res = mysqli_stmt_get_result($stmt);
             $bets = mysqli_fetch_all($res, MYSQLI_ASSOC);
         }
 

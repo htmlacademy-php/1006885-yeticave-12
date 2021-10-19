@@ -8,8 +8,8 @@ if ($link) {
         exit();
     }
     $user_id = $_SESSION['user']['id'];
-    $sql_query = 'SELECT l.lot_name, r.user_id, r.lot_id, r.date_add, r.rate_price, l.category_id, c.category_name, l.img_url, l.date_exp
-                    FROM rate r
+    $sql_query = 'SELECT l.lot_name, r.user_id, r.lot_id, r.date_add, r.bet_price, l.category_id, c.category_name, l.img_url, l.date_exp
+                    FROM bet r
                     JOIN lot l
                     ON l.id = r.lot_id
                     JOIN category c

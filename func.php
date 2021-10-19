@@ -69,19 +69,18 @@ function calculate_time_interval(string $value): string {
     $interval = time() - strtotime($value);
     $date_add = date_create($value);
 
-    switch ($interval) {
-        case ($interval < 60): // меньще минуты
-            return 'меньше минуты назад';
-        case ($interval < 3600): // меньше часа
-            $mm = floor($interval / 60);
-            return $mm . get_noun_plural_form($mm, 'минуту', 'минуты', 'минут') . ' назад';
-        case ($interval < 86400): // меньше суток
-            $hh = floor($interval / 3600);
-            return $hh . ' ' . get_noun_plural_form($hh, 'час', 'часа', 'часов') . ' назад';
-        case ($interval < 86400 * 2): // меньше 2 суток
-            return 'Вчера, в ' . $date_add->format('H:i');
-        default:
-            return $date_add->format('d.m.y в H:i');
+    if ($interval < 60) {
+        return 'менее минуты';
+    } else if ($interval < 3600) {
+        $mm = floor($interval / 60);
+        return $mm . ' ' . get_noun_plural_form($mm, 'минуту', 'минуты', 'минут') . ' назад';
+    } else if ($interval < 86400) {
+        $hh = floor($interval / 3600);
+        return $hh . ' ' . get_noun_plural_form($hh, 'час', 'часа', 'часов') . ' назад';
+    } else if ($interval < 86400 * 2) {
+        return 'Вчера, в ' . $date_add->format('H:i');
+    } else {
+        return $date_add->format('d.m.y в H:i');
     }
 }
 
