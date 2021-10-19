@@ -3,8 +3,8 @@ require_once('init.php');
 
 if ($link) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $form = $_POST;
-        $errors = validate($form);
+        $form_data = $_POST;
+        $errors = validate($form_data);
 
         if (count($errors)) {
             $page_content = include_template('login.php', [
@@ -12,9 +12,9 @@ if ($link) {
                 'errors' => $errors
             ]);
         } else {
-            $email = mysqli_real_escape_string($link, $form['email']);
-            $sql = 'SELECT * FROM user WHERE email = ?';
-            $stmt = mysqli_prepare($link, $sql);
+            $email = mysqli_real_escape_string($link, $form_data['email']);
+            $sql_query = 'SELECT * FROM user WHERE email = ?';
+            $stmt = mysqli_prepare($link, $sql_query);
             mysqli_stmt_bind_param($stmt, 's', $email);
             mysqli_stmt_execute($stmt);
             $res = mysqli_stmt_get_result($stmt);
@@ -22,7 +22,7 @@ if ($link) {
             $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
 
             if ($user) {
-                if (password_verify($form['password'], $user['pwd'])) {
+                if (password_verify($form_data['password'], $user['pwd'])) {
                     $_SESSION['user'] = $user;
                 }
                 else {
