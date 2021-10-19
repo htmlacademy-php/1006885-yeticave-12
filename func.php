@@ -8,6 +8,7 @@ function connect_db(string $host, string $user, string $pwd, string $name) {
         $page_content = include_template('error.php', ['error' => $error]);
         $layout_content = include_template('layout.php', [
             'content' => $page_content,
+            'lot_search' => '',
             'lots_categories' => []
         ]);
         print($layout_content);

@@ -56,7 +56,9 @@ if ($link) {
     $layout_content = include_template('layout.php', [
         'title' => 'Регистрация',
         'lots_categories' => $lots_categories,
+        'nav' => $nav_content,
         'content' => $page_content,
+        'lot_search' => ''
     ]);
 
     print($layout_content);

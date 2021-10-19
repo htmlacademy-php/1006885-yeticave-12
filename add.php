@@ -49,6 +49,8 @@ if ($link) {
         'title' => 'Добавление лота',
         'lots_categories' => $lots_categories,
         'content' => $page_content,
+        'nav' => $nav_content,
+        'lot_search' => ''
     ]);
 
     print($layout_content);
