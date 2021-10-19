@@ -18,17 +18,17 @@ if ($link) {
         if (!count($errors)) {
             $user_id = $_SESSION['user']['id'];
             mysqli_begin_transaction($link);
-            $sql = 'INSERT INTO bet
+            $sql_query = 'INSERT INTO bet
                         (user_id, lot_id, bet_price)
                         VALUES (?, ?, ?)';
             $data = [$user_id, $lot_id, $bet_data['cost']];
-            $stmt = db_get_prepare_stmt($link, $sql, $data);
+            $stmt = db_get_prepare_stmt($link, $sql_query, $data);
             $res_1 = mysqli_stmt_execute($stmt);
-            $sql = 'UPDATE lot
+            $sql_query = 'UPDATE lot
                         SET lot_price = ?
                         WHERE id = ?';
             $data = [$bet_data['cost'], $lot_id];
-            $stmt = db_get_prepare_stmt($link, $sql, $data);
+            $stmt = db_get_prepare_stmt($link, $sql_query, $data);
             $res_2 = mysqli_stmt_execute($stmt);
 
             if ($res_1 && $res_2) {
@@ -70,6 +70,7 @@ if ($link) {
         if ($lot) {
             $page_content = include_template('lot.php', [
                 'nav' => $nav_content,
+                'now' => $now,
                 'lot' => $lot,
                 'bets' => $bets,
                 'bets_count' => count($bets),

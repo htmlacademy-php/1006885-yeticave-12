@@ -14,11 +14,15 @@
             <?php if (isset($_SESSION['user'])) : ?>
             <div class="lot-item__right">
                 <div class="lot-item__state">
+                    <?php if ($lot['date_exp'] < $now) : ?>
+                        <div class="lot-item__timer timer timer--end">Торги окончены</div>
+                    <?php else : ?>
                     <div class="lot-item__timer timer <?= get_time_interval($lot['date_exp'])['hh'] < 1 ? "timer--finishing" : "" ?>">
                         <?php printf('%02d', get_time_interval($lot['date_exp'])['hh']); ?>
                         :
                         <?php printf('%02d', get_time_interval($lot['date_exp'])['mm']); ?>
                     </div>
+                    <?php endif; ?>
                     <div class="lot-item__cost-state">
                       <div class="lot-item__rate">
                         <span class="lot-item__amount">Текущая цена</span>
