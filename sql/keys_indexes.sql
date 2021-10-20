@@ -11,6 +11,11 @@ ALTER TABLE lot
         FOREIGN KEY (category_id) REFERENCES category(id)
         ON DELETE SET NULL;
 
+ALTER TABLE lot
+    ADD CONSTRAINT lot_winner_bet_id_fk
+        FOREIGN KEY (winner_bet_id) REFERENCES bet(id)
+        ON DELETE SET NULL;
+
 ALTER TABLE bet
     ADD CONSTRAINT lot_user_id_fk
         FOREIGN KEY (user_id) REFERENCES user(id)

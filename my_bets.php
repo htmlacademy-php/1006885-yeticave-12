@@ -9,7 +9,8 @@ if ($link) {
     }
     $user_id = $_SESSION['user']['id'];
     $sql_query = 'SELECT
-                        l.lot_name, b.user_id, b.lot_id, b.date_add, b.bet_price, l.category_id, c.category_name, l.img_url, l.date_exp, l.winner_id, u.contacts
+                        b.id, l.lot_name, b.user_id, b.lot_id, b.date_add, b.bet_price, l.category_id, c.category_name,
+                        l.img_url, l.date_exp, l.winner_id, l.winner_bet_id, u.contacts
                     FROM bet b
                     JOIN lot l
                     ON l.id = b.lot_id

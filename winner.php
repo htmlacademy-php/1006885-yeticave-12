@@ -29,9 +29,10 @@ if ($link) {
         $bet_data = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
         $sql = 'UPDATE lot
-                SET winner_id = ?
+                SET winner_id = ?,
+                    winner_bet_id = ?
                 WHERE id = ?';
-        $data = [$bet_data['user_id'], $lot['id']];
+        $data = [$bet_data['user_id'], $bet_data['id'], $lot['id']];
         $stmt = db_get_prepare_stmt($link, $sql, $data);
         $res_2 = mysqli_stmt_execute($stmt);
     }
