@@ -9,9 +9,7 @@ ALTER TABLE lot
         ON DELETE SET NULL,
     ADD CONSTRAINT lot_category_id_fk
         FOREIGN KEY (category_id) REFERENCES category(id)
-        ON DELETE SET NULL;
-
-ALTER TABLE lot
+        ON DELETE SET NULL,
     ADD CONSTRAINT lot_winner_bet_id_fk
         FOREIGN KEY (winner_bet_id) REFERENCES bet(id)
         ON DELETE SET NULL;
