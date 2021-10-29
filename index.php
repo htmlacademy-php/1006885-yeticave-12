@@ -1,6 +1,6 @@
 <?php
 require_once('init.php');
-require_once('winner.php');
+require_once('getwinner.php');
 
 if ($link) {
     $sql_query = 'SELECT l.id, l.lot_name, l.lot_price, l.img_url, l.date_add, l.date_exp, c.category_name

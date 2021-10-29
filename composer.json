@@ -1,0 +1,13 @@
+{
+    "name": "ianbel/yeticave",
+    "description": "Интернет аукцион",
+    "authors": [
+        {
+            "name": "Andrey Belyaev",
+            "email": "ianbel263@gmail.com"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "^6.3"
+    }
+}
